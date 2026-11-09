@@ -1,0 +1,45 @@
+# All external sources live here. To go offline, point these at local servers
+# (e.g. a local XYZ tile server / TileServer-GL / MapProxy, a local Overpass instance,
+# and a pre-downloaded model folder).
+user_agent: "MagicWandPOC/0.1 (hackathon proof-of-concept)"
+cache_dir: "cache"
+
+map:
+  center: [34.7818, 32.0853]   # lng, lat (Tel Aviv)
+  zoom: 17
+
+layers:
+  ortho:
+    name: "Orthophoto"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 19
+    attribution: "Imagery © Esri, Maxar, Earthstar Geographics"
+  street:
+    name: "Street map"
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+    max_zoom: 19
+    attribution: "© OpenStreetMap contributors"
+
+osm:
+  provider: "vector_tiles"  # vector_tiles | overpass
+  vector_tiles:
+    # OpenMapTiles-schema vector tiles: a TileJSON URL or an XYZ template ({z}/{x}/{y}.pbf).
+    # Offline: serve a planet/region .mbtiles with tileserver-gl / martin and point here.
+    url: "https://tiles.openfreemap.org/planet"
+    zoom: 14
+  overpass_urls:            # tried in order (only used when provider = overpass)
+    - "https://overpass-api.de/api/interpreter"
+    - "https://overpass.private.coffee/api/interpreter"
+    - "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
+  timeout_s: 20
+  building_search_m: 30     # radius for buildings around the click
+  road_hit_m: 6             # extra tolerance beyond half road width
+
+sam:
+  model: "facebook/sam2.1-hiera-base-plus"   # or a local folder path for offline use
+  device: "auto"                             # auto | cuda | cpu
+
+wand:
+  mosaic_px: 1024           # image size around a click fed to SAM2
+  max_mosaic_px: 2048       # cap when the mosaic must cover a clip polygon / view
+  simplify_px: 1.5          # default Douglas-Peucker tolerance (pixels)

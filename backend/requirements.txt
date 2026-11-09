@@ -1,0 +1,16 @@
+# torch/torchvision: install from the CUDA index first, e.g.
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+fastapi
+uvicorn[standard]
+httpx
+truststore
+pydantic
+pyyaml
+pillow
+numpy
+opencv-python-headless
+shapely>=2.0
+pyproj
+transformers>=4.56
+accelerate
+mapbox-vector-tile
